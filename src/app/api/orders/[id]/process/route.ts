@@ -5,6 +5,7 @@ import { createCargusClient } from '@/lib/cargus'
 import { createSmartBillClient, formatSmartBillDate, calculateDueDate } from '@/lib/smartbill'
 import { createEmailService } from '@/lib/email'
 
+export const runtime = 'nodejs';
 export async function POST(
   request: NextRequest,
   { params }: { params: { id: string } }
