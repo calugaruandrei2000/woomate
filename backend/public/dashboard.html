@@ -1,58 +1,46 @@
 <!DOCTYPE html>
 <html lang="ro">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WooMate AI Dashboard</title>
-  <link rel="stylesheet" href="assets/style.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WooMate AI - Dashboard</title>
+<link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
-  <!-- NAVBAR -->
-  <nav class="navbar">
-    <div class="logo">WooMate AI</div>
-    <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="#dashboard">Dashboard</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-  </nav>
 
-  <!-- DASHBOARD CONTENT -->
-  <section class="dashboard" id="dashboard" style="padding:8rem 2rem 4rem 2rem;">
-    <h1>Dashboard WooMate AI</h1>
-    <p>Urmărește activitatea AI în magazinul tău:</p>
+<nav class="navbar">
+  <div class="logo">WooMate AI</div>
+  <ul class="nav-links">
+    <li><a href="index.html">Acasă</a></li>
+    <li><a href="#stats">Statistici</a></li>
+    <li><a href="#activity">Activitate AI</a></li>
+  </ul>
+</nav>
 
-    <!-- STATISTICI -->
-    <div class="stats">
-      <div class="stat-card">
-        <h3>Total Interacțiuni AI</h3>
-        <p id="totalInteractions">0</p>
-      </div>
-      <div class="stat-card">
-        <h3>Conversii generate</h3>
-        <p id="conversions">0</p>
-      </div>
-      <div class="stat-card">
-        <h3>Venit estimat</h3>
-        <p id="revenue">0 lei</p>
-      </div>
+<section class="dashboard">
+  <h2>Dashboard Magazin</h2>
+
+  <div class="stats" id="stats">
+    <div class="stat-card">
+      <h3>Total interacțiuni</h3>
+      <p id="totalInteractions">0</p>
     </div>
-
-    <!-- MESAJE AI -->
-    <div class="ai-messages" style="margin-top:3rem;">
-      <h3>Mesaje trimise de AI</h3>
-      <ul id="aiMessages"></ul>
+    <div class="stat-card">
+      <h3>Conversii estimate</h3>
+      <p id="conversions">0</p>
     </div>
-
-    <!-- GRAFICE -->
-    <div class="chart-container" style="margin-top:3rem;">
-      <h3>Conversii / Zi</h3>
-      <canvas id="conversionsChart"></canvas>
+    <div class="stat-card">
+      <h3>Venit generat estimat</h3>
+      <p id="revenueGenerated">0 Lei</p>
     </div>
-  </section>
+  </div>
 
-  <script src="assets/dashboard.js"></script>
-  <script src="assets/widget.js"></script>
+  <div class="ai-messages" id="activity">
+    <h3>Mesaje AI</h3>
+    <ul id="aiMessages"></ul>
+  </div>
+</section>
+
+<script src="assets/dashboard.js"></script>
 </body>
 </html>
