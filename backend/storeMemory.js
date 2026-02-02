@@ -1,60 +1,31 @@
-const storeData = {};
+// storeMemory.js
+const stores = {}; // obiect cu date pentru fiecare magazin
 
-export function storeMessage(storeId, sessionId, message) {
-  if (!storeData[storeId]) storeData[storeId] = { sessions: {}, sales: [] };
-  if (!storeData[storeId].sessions[sessionId]) storeData[storeId].sessions[sessionId] = [];
-  storeData[storeId].sessions[sessionId].push({ message, date: new Date().toLocaleString() });
+export function storeSubscription(storeId, plan) {
+  if (!stores[storeId]) stores[storeId] = { metrics: {}, activity: [], plan: null };
+  stores[storeId].plan = plan;
 }
 
-export function storeSale(storeId, orderId, aiGenerated) {
-  if (!storeData[storeId]) storeData[storeId] = { sessions: {}, sales: [] };
-  storeData[storeId].sales.push({ orderId, aiGenerated, date: new Date().toLocaleString() });
+export function getSubscription(storeId) {
+  return stores[storeId]?.plan || null;
 }
 
-export function getSession(storeId) {
-  if (!storeData[storeId]) return { totalSales: 0, totalRevenue: 0, aiSales: [] };
-
-  let totalSales = 0;
-  let totalRevenue = 0;
-  const aiSales = [];
-
-  for (const sale of storeData[storeId].sales) {
-    sale.aiGenerated.forEach(item => {
-      totalSales += item.quantity;
-      totalRevenue += item.quantity * 100; // aici poți lua prețul real din plugin dacă vrei
-      aiSales.push({ product: item.product, quantity: item.quantity, date: sale.date });
-    });
-  }
-
-  return { totalSales, totalRevenue, aiSales };
+export function storeAIActivity(storeId, message) {
+  if (!stores[storeId]) stores[storeId] = { metrics: {}, activity: [], plan: null };
+  stores[storeId].activity.push({ time: new Date().toISOString(), message });
 }
 
-const subscriptions = {}; // { storeId: 'starter' }
-const activities = {};
-const metrics = {};
-
-export function storeSubscription(storeId, plan){
-  subscriptions[storeId] = plan;
+export function storeSale(storeId, revenue = 0) {
+  if (!stores[storeId]) stores[storeId] = { metrics: {}, activity: [], plan: null };
+  stores[storeId].metrics.interactions = (stores[storeId].metrics.interactions || 0) + 1;
+  stores[storeId].metrics.conversions = (stores[storeId].metrics.conversions || 0) + 1;
+  stores[storeId].metrics.revenue = (stores[storeId].metrics.revenue || 0) + revenue;
 }
 
-export function getSubscription(storeId){
-  return subscriptions[storeId] || 'trial';
+export function getAIActivity(storeId) {
+  return stores[storeId]?.activity || [];
 }
 
-export function logActivity(storeId,message){
-  if(!activities[storeId]) activities[storeId] = [];
-  activities[storeId].push({ time:new Date().toLocaleString(), message });
-}
-
-export function getAIActivity(storeId){
-  return activities[storeId] || [];
-}
-
-export function updateMetrics(storeId, newMetric){
-  if(!metrics[storeId]) metrics[storeId] = [];
-  metrics[storeId].push(newMetric);
-}
-
-export function getAIMetrics(storeId){
-  return metrics[storeId] || [];
+export function getAIMetrics(storeId) {
+  return stores[storeId]?.metrics || { interactions: 0, conversions: 0, revenue: 0 };
 }
