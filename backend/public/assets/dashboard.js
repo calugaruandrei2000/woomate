@@ -1,43 +1,26 @@
+const storeId = new URLSearchParams(window.location.search).get('store') || window.__WOOMATE_STORE_ID || 'demo-store';
+
 async function fetchDashboard() {
   try {
-    const storeId = 'demo-store'; // Aici plugin-ul va trimite store ID real
     const res = await fetch(`/dashboard?store=${storeId}`);
     const data = await res.json();
 
-    // Update statistici
-    document.getElementById('totalInteractions').textContent = data.totalInteractions;
-    document.getElementById('conversions').textContent = data.conversions;
-    document.getElementById('revenue').textContent = data.revenueGenerated + " lei";
+    document.getElementById('totalInteractions').innerText = data.totalInteractions;
+    document.getElementById('conversions').innerText = data.conversions;
+    document.getElementById('revenueGenerated').innerText = data.revenueGenerated + ' Lei';
 
-    // Mesaje AI
-    const messagesList = document.getElementById('aiMessages');
+    const messagesEl = document.getElementById('aiMessages');
+    messagesEl.innerHTML = '';
     data.aiMessages.forEach(msg => {
       const li = document.createElement('li');
-      li.textContent = `${msg.date}: ${msg.message}`;
-      messagesList.appendChild(li);
+      li.innerText = `[${msg.date}] ${msg.message}`;
+      messagesEl.appendChild(li);
     });
 
-    // Chart conversii
-    const ctx = document.getElementById('conversionsChart').getContext('2d');
-    new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: data.aiMessages.map(m => m.date),
-        datasets: [{
-          label: 'Conversii',
-          data: data.aiMessages.map((m, i) => i+1), // pentru MVP
-          borderColor: '#0a2540',
-          backgroundColor: 'rgba(10,37,64,0.1)',
-          tension: 0.3,
-          fill: true
-        }]
-      },
-      options: { responsive: true }
-    });
-
-  } catch (err) {
-    console.error("Eroare la fetch dashboard:", err);
+  } catch(err) {
+    console.error('Eroare la preluarea dashboard:', err);
   }
 }
 
 fetchDashboard();
+setInterval(fetchDashboard, 5000); // update automat la 5 sec
