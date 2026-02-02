@@ -1,0 +1,52 @@
+/* RESET */
+* { margin:0; padding:0; box-sizing:border-box; font-family: 'Arial', sans-serif; }
+
+/* NAVBAR */
+.navbar {
+  display:flex; justify-content:space-between; align-items:center;
+  padding:1rem 2rem; background:#0a2540; color:white; position:fixed; width:100%; top:0; z-index:100;
+}
+.nav-links { list-style:none; display:flex; gap:1.5rem; }
+.nav-links a { color:white; text-decoration:none; font-weight:500; transition:0.3s; }
+.nav-links a:hover { color:#f0a500; }
+
+/* HERO */
+.hero {
+  display:flex; justify-content:space-between; align-items:center;
+  padding:8rem 2rem 4rem 2rem; background:#f4f7ff;
+}
+.hero-content { max-width:600px; }
+.hero h1 { font-size:2.5rem; margin-bottom:1rem; }
+.hero p { margin-bottom:2rem; font-size:1.1rem; }
+.hero .cta-btn { background:#0a2540; color:white; padding:0.8rem 1.5rem; border-radius:5px; text-decoration:none; font-weight:600; }
+.hero .cta-btn:hover { background:#f0a500; color:#0a2540; }
+
+.hero-image img { max-width:400px; }
+
+/* FEATURES */
+.features { padding:4rem 2rem; text-align:center; background:white; }
+.features h2 { margin-bottom:2rem; font-size:2rem; }
+.feature-cards { display:flex; flex-wrap:wrap; justify-content:center; gap:1.5rem; }
+.card { background:#f4f7ff; padding:2rem; border-radius:10px; width:250px; transition:0.3s; }
+.card:hover { transform:translateY(-5px); box-shadow:0 5px 15px rgba(0,0,0,0.1); }
+
+/* PRICING */
+.pricing { padding:4rem 2rem; text-align:center; background:#eef2f7; }
+.pricing h2 { margin-bottom:2rem; font-size:2rem; }
+.pricing-cards { display:flex; flex-wrap:wrap; justify-content:center; gap:1.5rem; }
+.pricing .card { background:white; padding:2rem; border-radius:10px; width:250px; text-align:center; }
+.pricing .card .price { font-size:1.5rem; font-weight:700; margin:1rem 0; }
+
+/* CONTACT */
+.contact { padding:4rem 2rem; text-align:center; background:#f4f7ff; }
+.contact .cta-btn { background:#0a2540; color:white; padding:0.8rem 1.5rem; border-radius:5px; text-decoration:none; font-weight:600; }
+.contact .cta-btn:hover { background:#f0a500; color:#0a2540; }
+
+/* FOOTER */
+footer { padding:1.5rem 2rem; background:#0a2540; color:white; text-align:center; font-size:0.9rem; }
+
+/* RESPONSIVE */
+@media (max-width:900px) {
+  .hero { flex-direction:column; text-align:center; gap:2rem; }
+  .feature-cards, .pricing-cards { flex-direction:column; align-items:center; }
+}
