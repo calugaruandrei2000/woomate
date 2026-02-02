@@ -3,106 +3,100 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>WooMate AI - Asistent AI pentru WooCommerce</title>
+<title>WooMate AI - Asistent AI pentru Magazinul Tău</title>
 <link rel="stylesheet" href="assets/style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="assets/plan.js" defer></script>
 </head>
 <body>
 
-<!-- NAVBAR -->
 <nav class="navbar">
   <div class="logo">WooMate AI</div>
   <ul class="nav-links">
     <li><a href="#features">Funcționalități</a></li>
-    <li><a href="#pricing">Prețuri</a></li>
+    <li><a href="#pricing">Planuri & Prețuri</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="dashboard.html">Dashboard</a></li>
   </ul>
 </nav>
 
-<!-- HERO -->
-<section class="hero">
+<header class="hero">
   <div class="hero-content">
-    <h1>Asistent AI pentru magazinul tău WooCommerce</h1>
-    <p>Automatizează recomandările și vezi în timp real ce a făcut AI-ul pentru magazinul tău.</p>
-    <a href="#features" class="cta-btn">Vezi Funcționalități</a>
+    <h1>Asistent AI pentru Magazinul Tău</h1>
+    <p>Crește vânzările și oferă clienților recomandări personalizate automat.</p>
+    <a href="#pricing" class="cta-btn">Începe Trial Gratuit</a>
   </div>
-  <div class="hero-image">
-    <img src="assets/images/hero.png" alt="WooMate AI">
-  </div>
-</section>
+</header>
 
-<!-- FEATURES -->
 <section class="features" id="features">
-  <h2>Funcționalități</h2>
-  <div class="feature-cards">
-    <div class="card">
-      <h3>Recomandări personalizate</h3>
-      <p>AI-ul analizează produsele și comportamentul clienților pentru recomandări precise.</p>
+  <h2>Ce oferă WooMate AI</h2>
+  <div class="features-grid">
+    <div class="feature-card">
+      <h3>Recomandări AI</h3>
+      <p>AI-ul interacționează cu clienții și sugerează produse relevante în timp real.</p>
     </div>
-    <div class="card">
-      <h3>Activitate monitorizată</h3>
-      <p>Dashboard-ul arată ce a făcut AI-ul pentru magazinul tău în timp real.</p>
+    <div class="feature-card">
+      <h3>Dashboard Analytics</h3>
+      <p>Vezi în timp real impactul AI-ului asupra vânzărilor și interacțiunilor.</p>
     </div>
-    <div class="card">
-      <h3>Integrare ușoară</h3>
-      <p>Instalează plugin-ul și widget-ul se conectează automat, fără chei API.</p>
+    <div class="feature-card">
+      <h3>Top Produse</h3>
+      <p>Află care sunt produsele cele mai recomandate și vândute datorită AI.</p>
     </div>
-    <div class="card">
-      <h3>Statistici și raportări</h3>
-      <p>Vezi interacțiuni, conversii și venituri generate de AI.</p>
+    <div class="feature-card">
+      <h3>Planuri Flexibile</h3>
+      <p>Alege un plan potrivit pentru magazinul tău și activează doar funcționalitățile de care ai nevoie.</p>
     </div>
   </div>
 </section>
 
-<!-- PRICING -->
 <section class="pricing" id="pricing">
   <h2>Planuri și Prețuri</h2>
   <div class="pricing-cards">
-    
-    <div class="card">
+
+    <div class="card animate-card">
       <h3>Trial</h3>
-      <p>Test gratuit pentru 7 zile</p>
+      <p>Test gratuit 7 zile</p>
       <ul>
         <li>Recomandări AI limitate</li>
         <li>Dashboard basic</li>
-        <li>Top 3 produse recomandate</li>
+        <li>Top 3 produse</li>
       </ul>
       <span class="price">0 Lei</span>
       <a href="#" class="cta-btn" onclick="subscribePlan('trial')">Începe Trial</a>
     </div>
 
-    <div class="card">
+    <div class="card animate-card">
       <h3>Starter</h3>
-      <p>Ideal pentru magazine mici</p>
+      <p>Magazine mici</p>
       <ul>
         <li>Recomandări AI complete</li>
         <li>Dashboard full metrics</li>
-        <li>Top 5 produse recomandate</li>
-        <li>Monitorizare interacțiuni AI</li>
+        <li>Top 5 produse</li>
+        <li>Monitorizare interacțiuni</li>
       </ul>
       <span class="price">149 Lei / lună</span>
       <a href="#" class="cta-btn" onclick="subscribePlan('starter')">Cumpără</a>
     </div>
 
-    <div class="card">
+    <div class="card animate-card">
       <h3>Pro</h3>
       <p>Magazine medii / multiple</p>
       <ul>
         <li>Toate funcționalitățile Starter</li>
-        <li>Suport multi-store</li>
-        <li>Reguli custom pentru recomandări AI</li>
+        <li>Multi-store suport</li>
+        <li>Reguli custom AI</li>
       </ul>
       <span class="price">299 Lei / lună</span>
       <a href="#" class="cta-btn" onclick="subscribePlan('pro')">Cumpără</a>
     </div>
 
-    <div class="card">
+    <div class="card animate-card">
       <h3>Enterprise</h3>
-      <p>Magazine mari + suport prioritar</p>
+      <p>Magazine mari + suport dedicat</p>
       <ul>
         <li>Toate funcționalitățile Pro</li>
-        <li>Suport dedicat 24/7</li>
-        <li>Integrări custom și consultanță AI</li>
+        <li>Suport 24/7</li>
+        <li>Consultanță AI și integrări custom</li>
       </ul>
       <span class="price">499 Lei / lună</span>
       <a href="#" class="cta-btn" onclick="subscribePlan('enterprise')">Contact</a>
@@ -111,15 +105,16 @@
   </div>
 </section>
 
-<!-- CONTACT -->
-<section class="contact" id="contact">
+<section id="contact" class="contact">
   <h2>Contact</h2>
-  <p>Scrie-ne pentru suport sau întrebări despre WooMate AI.</p>
+  <p>Scrie-ne pentru demo sau suport personalizat</p>
+  <form>
+    <input type="text" placeholder="Nume" required>
+    <input type="email" placeholder="Email" required>
+    <textarea placeholder="Mesaj" required></textarea>
+    <button type="submit">Trimite</button>
+  </form>
 </section>
-
-<footer>
-  <p>© 2026 WooMate AI. Toate drepturile rezervate.</p>
-</footer>
 
 </body>
 </html>
