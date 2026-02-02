@@ -1,58 +1,67 @@
 <!DOCTYPE html>
 <html lang="ro">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dashboard WooMate AI</title>
-<link rel="stylesheet" href="assets/style.css">
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="assets/dashboard.js" defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - WooMate AI</title>
+  <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
+  <header>
+    <nav>
+      <div class="logo">WooMate AI</div>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="register.html">Înregistrează Magazin</a></li>
+        <li><a href="dashboard.html" class="active">Dashboard</a></li>
+      </ul>
+    </nav>
+  </header>
 
-<nav class="navbar">
-  <div class="logo">WooMate AI</div>
-  <ul class="nav-links">
-    <li><a href="index.html">Landing</a></li>
-    <li><a href="#metrics">Progres</a></li>
-    <li><a href="#activity">Interacțiuni AI</a></li>
-    <li><a href="#plan">Plan activ</a></li>
-    <li><a href="#account">Cont</a></li>
-  </ul>
-</nav>
+  <main class="dashboard-page">
+    <h1>Dashboard Magazin</h1>
+    <p>Vezi exact ce a făcut AI pentru magazinul tău.</p>
 
-<header class="dashboard-hero">
-  <h1>Bine ai venit, magazinul tău e mai smart cu AI!</h1>
-  <p>Vezi impactul recomandărilor AI în timp real.</p>
-</header>
-
-<section id="plan" class="plan-summary">
-  <h2>Planul tău activ</h2>
-  <div id="active-plan" class="card"></div>
-</section>
-
-<section id="metrics" class="metrics">
-  <h2>Metrici în timp real</h2>
-  <div class="charts-grid">
-    <div class="chart-card">
-      <h3>Interacțiuni AI</h3>
-      <canvas id="interactionsChart"></canvas>
+    <div id="metrics">
+      <div class="metric">
+        <h3>Interacțiuni AI</h3>
+        <span id="interactions">0</span>
+      </div>
+      <div class="metric">
+        <h3>Conversii</h3>
+        <span id="conversions">0</span>
+      </div>
+      <div class="metric">
+        <h3>Venit generat</h3>
+        <span id="revenue">0</span>
+      </div>
     </div>
-    <div class="chart-card">
-      <h3>Conversii</h3>
-      <canvas id="conversionsChart"></canvas>
-    </div>
-    <div class="chart-card">
-      <h3>Venit generat</h3>
-      <canvas id="revenueChart"></canvas>
-    </div>
-  </div>
-</section>
 
-<section id="activity" class="activity-log">
-  <h2>Ce a făcut AI pentru tine</h2>
-  <ul id="activityList" class="activity-list"></ul>
-</section>
+    <h2>Activitate AI</h2>
+    <ul id="activityList"></ul>
+  </main>
 
+  <script>
+    const storeId = prompt("Introdu URL-ul magazinului pentru a încărca datele");
+
+    async function loadDashboard() {
+      const res = await fetch(`/dashboard?store=${storeId}`);
+      const data = await res.json();
+
+      document.getElementById('interactions').textContent = data.metrics.interactions || 0;
+      document.getElementById('conversions').textContent = data.metrics.conversions || 0;
+      document.getElementById('revenue').textContent = data.metrics.revenue || 0;
+
+      const activityList = document.getElementById('activityList');
+      activityList.innerHTML = '';
+      data.activity.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = `${item.time} - ${item.message}`;
+        activityList.appendChild(li);
+      });
+    }
+
+    loadDashboard();
+  </script>
 </body>
 </html>
