@@ -80,3 +80,29 @@ app.get('*', (req, res) => {
 
 // ==================== START SERVER ====================
 app.listen(PORT, () => console.log(`WooMate AI backend live pe port ${PORT}`));
+
+
+
+app.post('/register-store', async (req, res) => {
+  const { storeUrl, email, password } = req.body;
+  if(!storeUrl || !email || !password){
+    return res.status(400).json({ error: 'Date incomplete' });
+  }
+
+  try {
+    // 1. Creează un cont în baza noastră de date / memorie
+    const storeId = storeUrl.replace(/https?:\/\//,'').replace(/\./g,'_');
+    storeSubscription(storeId, 'trial'); // pachet trial implicit
+    storeMessage(storeId, 'system', 'Magazin înregistrat cu succes');
+
+    // 2. Generează plugin (fisier .zip sau link de download)
+    // În MVP putem returna doar un link demo către plugin
+    const pluginLink = `/plugin/WooMateAI.zip`;
+
+    res.json({ success: true, pluginLink });
+  } catch(err){
+    console.error(err);
+    res.status(500).json({ error: 'Eroare server' });
+  }
+});
+
