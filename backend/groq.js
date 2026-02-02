@@ -1,36 +1,18 @@
+// Wrapper pentru API Groq
 import fetch from 'node-fetch';
 
-export async function handleGroqChat(history, storeUrl) {
-  if (!process.env.GROQ_API_KEY) {
-    return "AI-ul este temporar indisponibil (lipsă configurare).";
-  }
+const GROQ_API_KEY = process.env.GROQ_API_KEY; // cheia ta secretă
 
-  const messages = [
-    {
-      role: "system",
-      content: `Ești un AI assistant pentru magazine online. Ajută clientul să cumpere mai ușor.`
+export async function queryGroq(prompt) {
+  const res = await fetch('https://api.groq.com/v1/query', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${GROQ_API_KEY}`
     },
-    ...history
-  ];
+    body: JSON.stringify({ prompt })
+  });
 
-  try {
-    const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${process.env.GROQ_API_KEY}`,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        model: "llama3-70b-8192",
-        messages,
-        temperature: 0.7
-      })
-    });
-
-    const data = await response.json();
-    return data.choices?.[0]?.message?.content || "Nu am un răspuns acum.";
-  } catch (err) {
-    console.error("Groq error:", err);
-    return "Eroare AI temporară.";
-  }
+  const data = await res.json();
+  return data.response || "Nu am putut genera răspuns";
 }
