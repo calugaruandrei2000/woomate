@@ -24,21 +24,26 @@ let salesTimelineChart = new Chart(ctxTimeline, {
 
 // Fetch data
 async function fetchDashboard(){
-  try {
-    const res = await fetch(`/dashboard?store=${storeId}`);
-    const data = await res.json();
+  const plan = await fetch('/get-plan?store=' + storeId).then(r=>r.json()).then(d=>d.plan);
+  
+  // Obține date doar dacă funcționalitatea este activă
+  const res = await fetch(`/dashboard?store=${storeId}`);
+  const data = await res.json();
 
-    totalInteractionsEl.innerText = data.totalSales;
-    conversionsEl.innerText = data.aiSales.length;
-    revenueEl.innerText = data.totalRevenue + ' Lei';
+  // Dashboard metrici
+  if(plan === 'trial'){
+    // limitați grafice, top produse 3, doar interacțiuni
+  } else if(plan === 'starter'){
+    // toate metricile full
+  } else if(plan === 'pro'){
+    // multi-store, reguli custom
+  } else if(plan === 'enterprise'){
+    // tot + suport dedicat
+  }
 
-    // Update AI logs
-    messagesEl.innerHTML = '';
-    data.aiSales.forEach(s => {
-      const li = document.createElement('li');
-      li.innerText = `[${s.date}] ${s.quantity} x ${s.product}`;
-      messagesEl.appendChild(li);
-    });
+  // Aici actualizezi graficele și logs conform planului
+}
+
 
     // Top 5 produse
     const productMap = {};
