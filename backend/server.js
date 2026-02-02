@@ -5,6 +5,26 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { storeMessage, getSession, storeSale } from './storeMemory.js';
 import { queryGroq } from './groq.js';
+import express from 'express';
+import bodyParser from 'body-parser';
+import { storeSubscription } from './storeMemory.js';
+
+const app = express();
+app.use(bodyParser.json());
+app.use(express.static('public'));
+
+app.post('/subscribe', (req, res) => {
+  const { plan } = req.body;
+  const storeId = req.headers['x-store-id'] || 'demo-store';
+  
+  // Salvează planul în memoria serverului sau DB
+  storeSubscription(storeId, plan);
+
+  res.json({ success: true, plan });
+});
+
+app.listen(process.env.PORT || 5000, () => console.log('Server AI live 🚀'));
+
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
