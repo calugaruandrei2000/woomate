@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WooMate AI Dashboard</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="logo">WooMate AI</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="#dashboard">Dashboard</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- DASHBOARD CONTENT -->
+  <section class="dashboard" id="dashboard" style="padding:8rem 2rem 4rem 2rem;">
+    <h1>Dashboard WooMate AI</h1>
+    <p>Urmărește performanța AI în magazinul tău WooCommerce:</p>
+
+    <!-- EVOLUTIE CONVERSII -->
+    <div class="chart-container">
+      <h3>Conversii generate</h3>
+      <canvas id="conversionsChart"></canvas>
+    </div>
+
+    <!-- TOP PRODUSE RECOMANDATE -->
+    <div class="top-products" style="margin-top:3rem;">
+      <h3>Top produse recomandate</h3>
+      <ul id="topProducts"></ul>
+    </div>
+
+    <!-- VALOARE MEDIE COS -->
+    <div class="avg-cart" style="margin-top:3rem;">
+      <h3>Valoare medie coș</h3>
+      <p id="avgCart">Calculating...</p>
+    </div>
+  </section>
+
+  <script src="assets/dashboard.js"></script>
+</body>
+</html>
