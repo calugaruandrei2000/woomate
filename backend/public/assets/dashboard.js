@@ -1,76 +1,60 @@
-const storeId = window.__WOOMATE_STORE_ID || 'demo-store';
+const storeId = localStorage.getItem('storeId') || 'demo-store';
+const activePlanEl = document.getElementById('active-plan');
+const activityList = document.getElementById('activityList');
 
-// DOM Elements
-const totalInteractionsEl = document.getElementById('totalInteractions');
-const conversionsEl = document.getElementById('conversions');
-const revenueEl = document.getElementById('revenueGenerated');
-const messagesEl = document.getElementById('aiMessages');
+// Grafice Chart.js
+let interactionsChart, conversionsChart, revenueChart;
 
-// Chart.js canvases
-const ctxProducts = document.getElementById('topProductsChart').getContext('2d');
-const ctxTimeline = document.getElementById('salesTimelineChart').getContext('2d');
-
-let topProductsChart = new Chart(ctxProducts, {
-  type: 'bar',
-  data: { labels: [], datasets: [{ label: 'Cantitate vândută', data: [], backgroundColor: '#007bff' }] },
-  options: { responsive:true, plugins:{legend:{display:false}} }
-});
-
-let salesTimelineChart = new Chart(ctxTimeline, {
-  type: 'line',
-  data: { labels: [], datasets: [{ label:'Vânzări AI', data: [], borderColor:'#28a745', fill:false }] },
-  options: { responsive:true, plugins:{legend:{display:true}} }
-});
-
-// Fetch data
 async function fetchDashboard(){
-  const plan = await fetch('/get-plan?store=' + storeId).then(r=>r.json()).then(d=>d.plan);
-  
-  // Obține date doar dacă funcționalitatea este activă
-  const res = await fetch(`/dashboard?store=${storeId}`);
-  const data = await res.json();
+  try {
+    // Plan activ
+    const planData = await fetch(`/get-plan?store=${storeId}`).then(r=>r.json());
+    activePlanEl.innerHTML = `<h3>${planData.plan.toUpperCase()}</h3><p>Funcționalități active pentru planul tău.</p>`;
 
-  // Dashboard metrici
-  if(plan === 'trial'){
-    // limitați grafice, top produse 3, doar interacțiuni
-  } else if(plan === 'starter'){
-    // toate metricile full
-  } else if(plan === 'pro'){
-    // multi-store, reguli custom
-  } else if(plan === 'enterprise'){
-    // tot + suport dedicat
-  }
+    // Date reale AI
+    const data = await fetch(`/dashboard?store=${storeId}`).then(r=>r.json());
 
-  // Aici actualizezi graficele și logs conform planului
-}
-
-
-    // Top 5 produse
-    const productMap = {};
-    data.aiSales.forEach(s => {
-      productMap[s.product] = (productMap[s.product] || 0) + s.quantity;
+    // Activity log
+    activityList.innerHTML = '';
+    data.activity.forEach(item => {
+      const li = document.createElement('li');
+      li.textContent = `${item.time} → ${item.message}`;
+      activityList.appendChild(li);
     });
-    const sortedProducts = Object.entries(productMap).sort((a,b)=>b[1]-a[1]).slice(0,5);
-    topProductsChart.data.labels = sortedProducts.map(p => p[0]);
-    topProductsChart.data.datasets[0].data = sortedProducts.map(p => p[1]);
-    topProductsChart.update();
 
-    // Vanzari pe zile
-    const salesByDate = {};
-    data.aiSales.forEach(s => {
-      const day = s.date.split(' ')[0];
-      salesByDate[day] = (salesByDate[day] || 0) + s.quantity;
+    // Grafice animate
+    const labels = data.metrics.map(m => m.date);
+    const interactions = data.metrics.map(m => m.interactions);
+    const conversions = data.metrics.map(m => m.conversions);
+    const revenue = data.metrics.map(m => m.revenue);
+
+    const ctxInteractions = document.getElementById('interactionsChart').getContext('2d');
+    const ctxConversions = document.getElementById('conversionsChart').getContext('2d');
+    const ctxRevenue = document.getElementById('revenueChart').getContext('2d');
+
+    interactionsChart = new Chart(ctxInteractions, {
+      type:'line',
+      data:{ labels, datasets:[{label:'Interacțiuni', data:interactions, borderColor:'#007bff', backgroundColor:'rgba(0,123,255,0.2)'}] },
+      options:{ responsive:true, animation:{duration:1000} }
     });
-    const sortedDates = Object.keys(salesByDate).sort();
-    salesTimelineChart.data.labels = sortedDates;
-    salesTimelineChart.data.datasets[0].data = sortedDates.map(d => salesByDate[d]);
-    salesTimelineChart.update();
+
+    conversionsChart = new Chart(ctxConversions, {
+      type:'line',
+      data:{ labels, datasets:[{label:'Conversii', data:conversions, borderColor:'#28a745', backgroundColor:'rgba(40,167,69,0.2)'}] },
+      options:{ responsive:true, animation:{duration:1000} }
+    });
+
+    revenueChart = new Chart(ctxRevenue, {
+      type:'line',
+      data:{ labels, datasets:[{label:'Venit generat', data:revenue, borderColor:'#ffc107', backgroundColor:'rgba(255,193,7,0.2)'}] },
+      options:{ responsive:true, animation:{duration:1000} }
+    });
 
   } catch(err){
     console.error('Eroare dashboard:', err);
   }
 }
 
-// Initial fetch + refresh la 5 secunde
+// Refresh automat la fiecare 30s
 fetchDashboard();
-setInterval(fetchDashboard, 5000);
+setInterval(fetchDashboard, 30000);
