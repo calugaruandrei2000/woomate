@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>WooMate AI - Dashboard</title>
 <link rel="stylesheet" href="assets/style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
@@ -12,33 +13,40 @@
   <div class="logo">WooMate AI</div>
   <ul class="nav-links">
     <li><a href="index.html">Acasă</a></li>
-    <li><a href="#stats">Statistici</a></li>
-    <li><a href="#activity">Activitate AI</a></li>
+    <li><a href="#metrics">Dashboard</a></li>
+    <li><a href="#products">Top Produse</a></li>
   </ul>
 </nav>
 
-<section class="dashboard">
-  <h2>Dashboard Magazin</h2>
-
-  <div class="stats" id="stats">
-    <div class="stat-card">
-      <h3>Total interacțiuni</h3>
+<section class="dashboard" id="metrics">
+  <h2>Dashboard-ul tău AI</h2>
+  <div class="metrics-cards">
+    <div class="card">
+      <h3>Total interacțiuni AI</h3>
       <p id="totalInteractions">0</p>
     </div>
-    <div class="stat-card">
-      <h3>Conversii estimate</h3>
+    <div class="card">
+      <h3>Vânzări generate AI</h3>
       <p id="conversions">0</p>
     </div>
-    <div class="stat-card">
-      <h3>Venit generat estimat</h3>
+    <div class="card">
+      <h3>Venit generat AI</h3>
       <p id="revenueGenerated">0 Lei</p>
     </div>
   </div>
+</section>
 
-  <div class="ai-messages" id="activity">
-    <h3>Mesaje AI</h3>
-    <ul id="aiMessages"></ul>
-  </div>
+<section class="charts" id="products">
+  <h2>Top Produse Recomandate</h2>
+  <canvas id="topProductsChart" height="150"></canvas>
+
+  <h2>Vânzări AI pe Zile</h2>
+  <canvas id="salesTimelineChart" height="150"></canvas>
+</section>
+
+<section class="ai-logs">
+  <h2>Detalii Recomandări AI</h2>
+  <ul id="aiMessages"></ul>
 </section>
 
 <script src="assets/dashboard.js"></script>
