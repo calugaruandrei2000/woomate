@@ -1,20 +1,36 @@
-import fetch from "node-fetch";
+import fetch from 'node-fetch';
 
-export async function askGroq(message) {
-  const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
-    method: "POST",
-    headers: {
-      "Authorization": `Bearer ${process.env.GROQ_API_KEY}`,
-      "Content-Type": "application/json"
+export async function handleGroqChat(history, storeUrl) {
+  if (!process.env.GROQ_API_KEY) {
+    return "AI-ul este temporar indisponibil (lipsă configurare).";
+  }
+
+  const messages = [
+    {
+      role: "system",
+      content: `Ești un AI assistant pentru magazine online. Ajută clientul să cumpere mai ușor.`
     },
-    body: JSON.stringify({
-      model: "llama3-8b-8192",
-      messages: [
-        { role: "system", content: "You are a professional AI sales assistant for an e-commerce store." },
-        { role: "user", content: message }
-      ]
-    })
-  });
-  const data = await res.json();
-  return data.choices[0].message.content;
+    ...history
+  ];
+
+  try {
+    const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${process.env.GROQ_API_KEY}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        model: "llama3-70b-8192",
+        messages,
+        temperature: 0.7
+      })
+    });
+
+    const data = await response.json();
+    return data.choices?.[0]?.message?.content || "Nu am un răspuns acum.";
+  } catch (err) {
+    console.error("Groq error:", err);
+    return "Eroare AI temporară.";
+  }
 }
