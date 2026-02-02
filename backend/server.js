@@ -8,6 +8,22 @@ import { queryGroq } from './groq.js';
 import express from 'express';
 import bodyParser from 'body-parser';
 import { storeSubscription } from './storeMemory.js';
+import { getSubscription } from './storeMemory.js';
+import { getAIActivity, getAIMetrics } from './storeMemory.js'; // sau DB real
+
+app.get('/get-plan', (req,res) => {
+  const storeId = req.query.store || 'demo-store';
+  const plan = getSubscription(storeId);
+  res.json({ plan });
+});
+
+app.get('/dashboard', (req,res) => {
+  const storeId = req.query.store || 'demo-store';
+  const activity = getAIActivity(storeId);  // array cu {time,message}
+  const metrics = getAIMetrics(storeId);    // array cu {date,interactions,conversions,revenue}
+  res.json({ activity, metrics });
+});
+
 
 const app = express();
 app.use(bodyParser.json());
