@@ -30,6 +30,8 @@ export function getSession(storeId) {
 }
 
 const subscriptions = {}; // { storeId: 'starter' }
+const activities = {};
+const metrics = {};
 
 export function storeSubscription(storeId, plan){
   subscriptions[storeId] = plan;
@@ -37,4 +39,22 @@ export function storeSubscription(storeId, plan){
 
 export function getSubscription(storeId){
   return subscriptions[storeId] || 'trial';
+}
+
+export function logActivity(storeId,message){
+  if(!activities[storeId]) activities[storeId] = [];
+  activities[storeId].push({ time:new Date().toLocaleString(), message });
+}
+
+export function getAIActivity(storeId){
+  return activities[storeId] || [];
+}
+
+export function updateMetrics(storeId, newMetric){
+  if(!metrics[storeId]) metrics[storeId] = [];
+  metrics[storeId].push(newMetric);
+}
+
+export function getAIMetrics(storeId){
+  return metrics[storeId] || [];
 }
