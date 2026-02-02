@@ -3,7 +3,7 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { storeMessage, getSession } from './storeMemory.js';
+import { storeMessage, getSession, storeSale } from './storeMemory.js';
 import { queryGroq } from './groq.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -16,21 +16,18 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Endpoint pentru widget chat
+// Endpoint pentru chat widget
 app.post('/chat', async (req, res) => {
   const { storeId, sessionId, message } = req.body;
-
   if (!storeId || !sessionId || !message) return res.status(400).json({ reply: "Date lipsă" });
 
-  // Stochează mesaj
   storeMessage(storeId, sessionId, message);
 
-  // Obține răspuns AI de la Groq
   const aiReply = await queryGroq(`Magazin: ${storeId}\nÎntrebare client: ${message}`);
   res.json({ reply: aiReply });
 });
 
-// Dashboard pentru client
+// Endpoint pentru dashboard
 app.get('/dashboard', (req, res) => {
   const store = req.query.store;
   if (!store) return res.status(400).json({ error: 'Store missing' });
@@ -39,11 +36,18 @@ app.get('/dashboard', (req, res) => {
   res.json(data);
 });
 
+// Endpoint pentru înregistrare vânzări AI
+app.post('/track-sale', (req, res) => {
+  const { storeId, orderId, aiGenerated } = req.body;
+  if (!storeId || !orderId || !aiGenerated) return res.status(400).json({ error: 'Date lipsă' });
+
+  storeSale(storeId, orderId, aiGenerated);
+  res.json({ success: true });
+});
+
 // Serve static files
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/index.html'));
 });
 
-app.listen(PORT, () => {
-  console.log(`WooMate AI live pe port ${PORT}`);
-});
+app.listen(PORT, () => console.log(`WooMate AI backend live pe port ${PORT}`));
