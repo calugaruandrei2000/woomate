@@ -58,30 +58,56 @@
 <section class="pricing" id="pricing">
   <h2>Planuri și Prețuri</h2>
   <div class="pricing-cards">
+    
     <div class="card">
       <h3>Trial</h3>
-      <p>Perioadă gratuită, limitată</p>
+      <p>Test gratuit pentru 7 zile</p>
+      <ul>
+        <li>Recomandări AI limitate</li>
+        <li>Dashboard basic</li>
+        <li>Top 3 produse recomandate</li>
+      </ul>
       <span class="price">0 Lei</span>
-      <a href="#" class="cta-btn">Începe Trial</a>
+      <a href="#" class="cta-btn" onclick="subscribePlan('trial')">Începe Trial</a>
     </div>
+
     <div class="card">
       <h3>Starter</h3>
-      <p>Recomandări AI + Dashboard basic</p>
+      <p>Ideal pentru magazine mici</p>
+      <ul>
+        <li>Recomandări AI complete</li>
+        <li>Dashboard full metrics</li>
+        <li>Top 5 produse recomandate</li>
+        <li>Monitorizare interacțiuni AI</li>
+      </ul>
       <span class="price">149 Lei / lună</span>
-      <a href="#" class="cta-btn">Cumpără</a>
+      <a href="#" class="cta-btn" onclick="subscribePlan('starter')">Cumpără</a>
     </div>
+
     <div class="card">
       <h3>Pro</h3>
-      <p>Toate funcțiile + multiple magazine</p>
+      <p>Magazine medii / multiple</p>
+      <ul>
+        <li>Toate funcționalitățile Starter</li>
+        <li>Suport multi-store</li>
+        <li>Reguli custom pentru recomandări AI</li>
+      </ul>
       <span class="price">299 Lei / lună</span>
-      <a href="#" class="cta-btn">Cumpără</a>
+      <a href="#" class="cta-btn" onclick="subscribePlan('pro')">Cumpără</a>
     </div>
+
     <div class="card">
       <h3>Enterprise</h3>
-      <p>Suport prioritar + custom rules</p>
+      <p>Magazine mari + suport prioritar</p>
+      <ul>
+        <li>Toate funcționalitățile Pro</li>
+        <li>Suport dedicat 24/7</li>
+        <li>Integrări custom și consultanță AI</li>
+      </ul>
       <span class="price">499 Lei / lună</span>
-      <a href="#" class="cta-btn">Contact</a>
+      <a href="#" class="cta-btn" onclick="subscribePlan('enterprise')">Contact</a>
     </div>
+
   </div>
 </section>
 
