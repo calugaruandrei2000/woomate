@@ -28,3 +28,13 @@ export function getSession(storeId) {
 
   return { totalSales, totalRevenue, aiSales };
 }
+
+const subscriptions = {}; // { storeId: 'starter' }
+
+export function storeSubscription(storeId, plan){
+  subscriptions[storeId] = plan;
+}
+
+export function getSubscription(storeId){
+  return subscriptions[storeId] || 'trial';
+}
