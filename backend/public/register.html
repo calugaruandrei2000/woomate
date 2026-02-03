@@ -1,76 +1,23 @@
 <!DOCTYPE html>
-<html lang="ro">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Înregistrează Magazin - WooMate AI</title>
-  <link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/auth.js"></script>
 </head>
+
 <body>
-  <header>
-    <nav>
-      <div class="logo">WooMate AI</div>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="register.html" class="active">Înregistrează Magazin</a></li>
-        <li><a href="dashboard.html">Dashboard</a></li>
-      </ul>
-    </nav>
-  </header>
 
-  <main class="register-page">
-    <h1>Configurează magazinul tău WooCommerce</h1>
-    <p>Alege pachetul dorit și creează contul pentru a primi pluginul și dashboard-ul.</p>
+<div class="auth-box">
 
-    <form id="registerForm">
-      <label for="storeUrl">URL Magazin:</label>
-      <input type="url" id="storeUrl" required placeholder="https://exemplu.ro">
+<h2>Crează cont WooMate</h2>
 
-      <label for="email">Email cont:</label>
-      <input type="email" id="email" required placeholder="email@exemplu.ro">
+<input id="storeUrl" placeholder="URL magazin">
+<input id="email" placeholder="Email">
+<input id="password" type="password" placeholder="Parolă">
 
-      <label for="password">Parolă:</label>
-      <input type="password" id="password" required>
+<button onclick="register()">Creează cont</button>
 
-      <input type="hidden" id="plan">
+</div>
 
-      <button type="submit" class="btn btn-primary">Creează Cont</button>
-    </form>
-
-    <div id="successMessage" style="display:none;">
-      <p>Cont creat! Vei primi pluginul pentru magazinul tău.</p>
-      <a id="downloadPlugin" href="#" class="btn btn-primary">Descarcă Plugin</a>
-    </div>
-  </main>
-
-  <script>
-    // Ia planul din query string
-    const urlParams = new URLSearchParams(window.location.search);
-    const plan = urlParams.get('plan') || 'trial';
-    document.getElementById('plan').value = plan;
-
-    const form = document.getElementById('registerForm');
-    form.addEventListener('submit', async e => {
-      e.preventDefault();
-      const storeUrl = document.getElementById('storeUrl').value;
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
-
-      const res = await fetch('/register-store', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ storeUrl, email, password, plan })
-      });
-
-      const data = await res.json();
-      if(data.success){
-        form.style.display = 'none';
-        document.getElementById('successMessage').style.display = 'block';
-        document.getElementById('downloadPlugin').href = data.pluginLink;
-      } else {
-        alert('Eroare: ' + (data.error || 'Nu s-a putut crea contul'));
-      }
-    });
-  </script>
 </body>
 </html>
