@@ -1,67 +1,41 @@
 <!DOCTYPE html>
-<html lang="ro">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard - WooMate AI</title>
-  <link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/dashboard.js"></script>
 </head>
+
 <body>
-  <header>
-    <nav>
-      <div class="logo">WooMate AI</div>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="register.html">Înregistrează Magazin</a></li>
-        <li><a href="dashboard.html" class="active">Dashboard</a></li>
-      </ul>
-    </nav>
-  </header>
 
-  <main class="dashboard-page">
-    <h1>Dashboard Magazin</h1>
-    <p>Vezi exact ce a făcut AI pentru magazinul tău.</p>
+<header class="navbar">
+<div class="logo">WooMate Dashboard</div>
+</header>
 
-    <div id="metrics">
-      <div class="metric">
-        <h3>Interacțiuni AI</h3>
-        <span id="interactions">0</span>
-      </div>
-      <div class="metric">
-        <h3>Conversii</h3>
-        <span id="conversions">0</span>
-      </div>
-      <div class="metric">
-        <h3>Venit generat</h3>
-        <span id="revenue">0</span>
-      </div>
-    </div>
+<section class="dashboard">
 
-    <h2>Activitate AI</h2>
-    <ul id="activityList"></ul>
-  </main>
+<div class="stats">
 
-  <script>
-    const storeId = prompt("Introdu URL-ul magazinului pentru a încărca datele");
+<div class="stat">
+<h3>Interacțiuni AI</h3>
+<p id="interactions">0</p>
+</div>
 
-    async function loadDashboard() {
-      const res = await fetch(`/dashboard?store=${storeId}`);
-      const data = await res.json();
+<div class="stat">
+<h3>Conversii</h3>
+<p id="conversions">0</p>
+</div>
 
-      document.getElementById('interactions').textContent = data.metrics.interactions || 0;
-      document.getElementById('conversions').textContent = data.metrics.conversions || 0;
-      document.getElementById('revenue').textContent = data.metrics.revenue || 0;
+<div class="stat">
+<h3>Venit generat</h3>
+<p id="revenue">0 €</p>
+</div>
 
-      const activityList = document.getElementById('activityList');
-      activityList.innerHTML = '';
-      data.activity.forEach(item => {
-        const li = document.createElement('li');
-        li.textContent = `${item.time} - ${item.message}`;
-        activityList.appendChild(li);
-      });
-    }
+</div>
 
-    loadDashboard();
-  </script>
+<h2>Activitate AI</h2>
+<ul id="activity"></ul>
+
+</section>
+
 </body>
 </html>
